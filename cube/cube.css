@@ -17,8 +17,7 @@ body, html {
     width: 300px;
     height: 300px;
     transform-style: preserve-3d;
-    transform: rotateX(30deg) rotateY(45deg);
-    animation: rotate 20s infinite linear;
+    cursor: grab;
 }
 
 /* Setiap small-cube akan memiliki ukuran dan posisi di dalam grid 3D */
@@ -51,7 +50,19 @@ body, html {
 .top { transform: rotateX(90deg) translateZ(25px); }
 .bottom { transform: rotateX(-90deg) translateZ(25px); }
 
-@keyframes rotate {
-    from { transform: rotateX(30deg) rotateY(0deg); }
-    to { transform: rotateX(30deg) rotateY(360deg); }
+
+
+#myButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50; /* Warna hijau */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#myButton:hover {
+    background-color: #45a049; /* Warna hijau sedikit lebih gelap saat di-hover */
 }
