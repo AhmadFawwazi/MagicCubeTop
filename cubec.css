@@ -9,6 +9,8 @@
 .cubebeng {
     position: relative;
     transform-style: preserve-3d;
+    cursor: grab;
+
 }
 
 .cube {

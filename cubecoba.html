@@ -1,12 +1,12 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/cubec.css">
+  <link rel="stylesheet" href="cubec.css">
   <title>CubeAITop</title>
 </head>
 <body>
     <main class="env">
-        <div class="cubebeng">
+        <div class="cubebeng" id="cubebeng">
             <div class="cube one">
                 <div class="grid">
                 </div>
@@ -99,20 +99,24 @@
         });
     
       
-        const cubebeng = document.querySelector('.cubebeng');
-        const env = document.querySelector('.env');
+        // const cubebeng = document.querySelector('.cubebeng');
+        // const env = document.querySelector('.env');
     
-        env.addEventListener('mousemove', (e) => {
-            const { width, height, left, top } = env.getBoundingClientRect();
-            const mouseX = e.clientX - left - width / 2;
-            const mouseY = e.clientY - top - height / 2;
+        // env.addEventListener('mousemove', (e) => {
+        //     const { width, height, left, top } = env.getBoundingClientRect();
+        //     const mouseX = e.clientX - left - width / 2;
+        //     const mouseY = e.clientY - top - height / 2;
     
-            const rotateY = (mouseX / width) * 800;
-            const rotateX = -(mouseY / height) * 800;
+        //     const rotateY = (mouseX / width) * 800;
+        //     const rotateX = -(mouseY / height) * 800;
     
-            cubebeng.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        });
+        //     cubebeng.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        // });
+    
     </script>
-    
+
+
+    <script src="cursorgrab.js"></script>
+
 </body>
 </html>
