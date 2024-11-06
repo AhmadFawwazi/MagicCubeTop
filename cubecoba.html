@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/cubec.css">
+  <title>CubeAITop</title>
+</head>
+<body>
+    <main class="env">
+        <div class="cubebeng">
+            <div class="cube one">
+                <div class="grid">
+                </div>
+            </div>
+            <div class="cube two">
+                <div class="grid">
+
+                </div>
+            </div>
+            <div class="cube three">
+                <div class="grid">
+
+                </div>
+            </div>
+            <div class="cube four">
+                <div class="grid">
+
+                </div>
+            </div>
+            <div class="cube five">
+                <div class="grid">
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script>
+           const cubeNumbers = Array.from({ length: 125 }, (_, i) => i + 1);
+
+let numberIndex = 0;
+document.querySelectorAll('.grid').forEach(grid => {
+
+for (let i = 0; i < 25; i++) {
+const drin = document.createElement('div');
+const number = cubeNumbers[numberIndex];
+
+const faces = ['front', 'back', 'top', 'bottom', 'left', 'right'];
+for (let j = 0; j < 6; j++) {
+const face = document.createElement('div');
+face.classList.add(faces[j]); 
+drin.appendChild(face);
+face.textContent = number;
+}
+
+
+grid.appendChild(drin);
+numberIndex++;
+}
+});
+
+// Function to shuffle only the values in the array, keeping the index positions constant
+
+// Event listener to shuffle values and update display on button click
+
+  const cubebeng = document.querySelector('.cubebeng');
+  const env = document.querySelector('.env');
+
+  env.addEventListener('mousemove', (e) => {
+  
+    const { width, height, left, top } = env.getBoundingClientRect();
+    
+
+    const mouseX = e.clientX - left - width / 2;
+    const mouseY = e.clientY - top - height / 2;
+    
+
+    const rotateY = (mouseX / width) * 800; // Atur kekuatan rotasi pada sumbu Y
+    const rotateX = -(mouseY / height) * 800; // Atur kekuatan rotasi pada sumbu X
+    
+    // Terapkan rotasi ke elemen cubebeng
+    cubebeng.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+
+
+      </script>
+</body>
+</html>
