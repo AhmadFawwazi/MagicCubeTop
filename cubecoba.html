@@ -36,6 +36,9 @@
     </main>
     <button id="randomizeButton">rrr</button>
     <button id="repair">pair</button>
+    <button id="calculateSumButton">Calculate Sum of First Row</button>
+  
+  <div id="result">Sum of First Row: <span id="sumDisplay">0</span></div>
     <script>
         const recubeNumbers = Array.from({ length: 125 }, (_, i) => i + 1);
         let randomArray = [...recubeNumbers]; 
@@ -49,11 +52,16 @@
             }
         }
     
+      document.getElementById('calculateSumButton').addEventListener('click', () => {
+      // Ambil nilai dari array cubeNumbers indeks 0 sampai 4 dan jumlahkan
+      const firstRowSum = cubeNumbers[0] + cubeNumbers[1] + cubeNumbers[2] + cubeNumbers[3] + cubeNumbers[4];
+      document.getElementById('sumDisplay').textContent = firstRowSum;
+    });
 
         function renderNumbers() {
             let numberIndex = 0;
             document.querySelectorAll('.grid > div').forEach(drin => {
-                const number = cubeNumbers[numberIndex];
+                const number = cubeNumbers[numberIndex]
                 drin.querySelectorAll('div').forEach(face => {
                     face.textContent = number; 
                 });
@@ -76,15 +84,13 @@
     
         // Inisialisasi tampilan awal
         document.querySelectorAll('.grid').forEach(grid => {
-            for (let i = 0; i < 25; i++) {
+            for (let i = 0; i < 25; i++) { 
                 const drin = document.createElement('div'); 
-                const number = cubeNumbers[i + (Array.from(grid.parentNode.children).indexOf(grid) * 25)];
                 
                 const faces = ['front', 'back', 'top', 'bottom', 'left', 'right'];
                 faces.forEach(faceClass => {
                     const face = document.createElement('div');
                     face.classList.add(faceClass);
-                    face.textContent = number;
                     drin.appendChild(face);
                 });
     
