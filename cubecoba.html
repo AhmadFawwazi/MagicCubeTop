@@ -37,8 +37,10 @@
     <button id="randomizeButton">rrr</button>
     <button id="repair">pair</button>
     <button id="calculateSumButton">Calculate Sum of First Row</button>
+    <button id="CalculateObj">cccc</button>
   
   <div id="result">Sum of First Row: <span id="sumDisplay">0</span></div>
+  <div id="result1">Sum of obj: <span id="sumObj">0</span></div>
     <script>
         const recubeNumbers = Array.from({ length: 125 }, (_, i) => i + 1);
         let randomArray = [...recubeNumbers]; 
@@ -56,6 +58,10 @@
       // Ambil nilai dari array cubeNumbers indeks 0 sampai 4 dan jumlahkan
       const firstRowSum = cubeNumbers[0] + cubeNumbers[1] + cubeNumbers[2] + cubeNumbers[3] + cubeNumbers[4];
       document.getElementById('sumDisplay').textContent = firstRowSum;
+    });
+      document.getElementById('CalculateObj').addEventListener('click', () => {
+      const jawab = evaluate(cubeNumbers);
+      document.getElementById('sumObj').textContent = jawab;
     });
 
         function renderNumbers() {
@@ -117,6 +123,7 @@
 
 
     <script src="cursorgrab.js"></script>
+    <script src="objectiveFunc.js"></script>
 
 </body>
 </html>
