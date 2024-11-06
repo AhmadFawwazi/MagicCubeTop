@@ -34,54 +34,79 @@
         </div>
 
     </main>
+    <button id="randomizeButton">rrr</button>
+    <button id="repair">pair</button>
     <script>
-           const cubeNumbers = Array.from({ length: 125 }, (_, i) => i + 1);
-
-let numberIndex = 0;
-document.querySelectorAll('.grid').forEach(grid => {
-
-for (let i = 0; i < 25; i++) {
-const drin = document.createElement('div');
-const number = cubeNumbers[numberIndex];
-
-const faces = ['front', 'back', 'top', 'bottom', 'left', 'right'];
-for (let j = 0; j < 6; j++) {
-const face = document.createElement('div');
-face.classList.add(faces[j]); 
-drin.appendChild(face);
-face.textContent = number;
-}
-
-
-grid.appendChild(drin);
-numberIndex++;
-}
-});
-
-// Function to shuffle only the values in the array, keeping the index positions constant
-
-// Event listener to shuffle values and update display on button click
-
-  const cubebeng = document.querySelector('.cubebeng');
-  const env = document.querySelector('.env');
-
-  env.addEventListener('mousemove', (e) => {
-  
-    const { width, height, left, top } = env.getBoundingClientRect();
+        const recubeNumbers = Array.from({ length: 125 }, (_, i) => i + 1);
+        let randomArray = [...recubeNumbers]; 
+        let cubeNumbers = [...recubeNumbers]; 
+    
+        // Fungsi untuk mengacak isi array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
     
 
-    const mouseX = e.clientX - left - width / 2;
-    const mouseY = e.clientY - top - height / 2;
+        function renderNumbers() {
+            let numberIndex = 0;
+            document.querySelectorAll('.grid > div').forEach(drin => {
+                const number = cubeNumbers[numberIndex];
+                drin.querySelectorAll('div').forEach(face => {
+                    face.textContent = number; 
+                });
+                numberIndex++;
+            });
+        }
     
 
-    const rotateY = (mouseX / width) * 800; // Atur kekuatan rotasi pada sumbu Y
-    const rotateX = -(mouseY / height) * 800; // Atur kekuatan rotasi pada sumbu X
+        document.getElementById('randomizeButton').addEventListener('click', () => {
+            shuffleArray(randomArray); 
+            cubeNumbers = [...randomArray]; 
+            renderNumbers(); 
+        });
     
-    // Terapkan rotasi ke elemen cubebeng
-    cubebeng.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-  });
-
-
-      </script>
+       
+        document.getElementById('repair').addEventListener('click', () => {
+            cubeNumbers = [...recubeNumbers]; 
+            renderNumbers();
+        });
+    
+        // Inisialisasi tampilan awal
+        document.querySelectorAll('.grid').forEach(grid => {
+            for (let i = 0; i < 25; i++) {
+                const drin = document.createElement('div'); 
+                const number = cubeNumbers[i + (Array.from(grid.parentNode.children).indexOf(grid) * 25)];
+                
+                const faces = ['front', 'back', 'top', 'bottom', 'left', 'right'];
+                faces.forEach(faceClass => {
+                    const face = document.createElement('div');
+                    face.classList.add(faceClass);
+                    face.textContent = number;
+                    drin.appendChild(face);
+                });
+    
+                grid.appendChild(drin); 
+            }
+        });
+    
+      
+        const cubebeng = document.querySelector('.cubebeng');
+        const env = document.querySelector('.env');
+    
+        env.addEventListener('mousemove', (e) => {
+            const { width, height, left, top } = env.getBoundingClientRect();
+            const mouseX = e.clientX - left - width / 2;
+            const mouseY = e.clientY - top - height / 2;
+    
+            const rotateY = (mouseX / width) * 800;
+            const rotateX = -(mouseY / height) * 800;
+    
+            cubebeng.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+    </script>
+    
 </body>
 </html>
