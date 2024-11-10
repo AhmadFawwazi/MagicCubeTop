@@ -182,42 +182,49 @@
         //     cubebeng.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         // });
 
-        // STEEPEST ASCENT HILL CLIMBING 
         document.getElementById('startHillClimb').addEventListener('click', () => {
+        // Jalankan algoritma steepestAscentHillClimbing dan simpan hasilnya
         const result = steepestAscentHillClimbing(cubeNumbers);
 
-        // Tampilkan hasilnya
-            document.getElementById('finalScoreValue').textContent = result.finalScore;
-            document.getElementById('iterationValue').textContent = result.iteration;
-            document.getElementById('durationValue').textContent = result.duration.toFixed(2);
+        // Panggil displayResults untuk menampilkan hasilnya
+        displayResults(result, cubeNumbers, 'objectiveChart'); 
+        });
+        // STEEPEST ASCENT HILL CLIMBING 
+    //     document.getElementById('startHillClimb').addEventListener('click', () => {
+    //     const result = steepestAscentHillClimbing(cubeNumbers);
 
-            const ctx = document.getElementById('objectiveChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: result.scores.map((_, i) => i),
-                    datasets: [{
-                        label: 'Objective Function Value',
-                        data: result.scores,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        fill: false,
-                    }]
-                },
-        options: {
-            responsive: true,
-            scales: {
-                x: { title: { display: true, text: 'Iteration' } },
-                y: { title: { display: true, text: 'Objective Value' } }
-            }
-        }
-    });
+    //     // Tampilkan hasilnya
+    //         document.getElementById('finalScoreValue').textContent = result.finalScore;
+    //         document.getElementById('iterationValue').textContent = result.iteration;
+    //         document.getElementById('durationValue').textContent = result.duration.toFixed(2);
 
-            console.log("State Awal:", cubeNumbers);
-            console.log("State Akhir:", result.finalState);
-            console.log("Nilai Objective Function Akhir:", result.finalScore);
-            console.log("Durasi Pencarian:", result.duration, "detik");
-            console.log("Jumlah Iterasi:", result.iteration);
-    });
+    //         const ctx = document.getElementById('objectiveChart').getContext('2d');
+    //         new Chart(ctx, {
+    //             type: 'line',
+    //             data: {
+    //                 labels: result.scores.map((_, i) => i),
+    //                 datasets: [{
+    //                     label: 'Objective Function Value',
+    //                     data: result.scores,
+    //                     borderColor: 'rgba(75, 192, 192, 1)',
+    //                     fill: false,
+    //                 }]
+    //             },
+    //     options: {
+    //         responsive: true,
+    //         scales: {
+    //             x: { title: { display: true, text: 'Iteration' } },
+    //             y: { title: { display: true, text: 'Objective Value' } }
+    //         }
+    //     }
+    // });
+
+    //         console.log("State Awal:", cubeNumbers);
+    //         console.log("State Akhir:", result.finalState);
+    //         console.log("Nilai Objective Function Akhir:", result.finalScore);
+    //         console.log("Durasi Pencarian:", result.duration, "detik");
+    //         console.log("Jumlah Iterasi:", result.iteration);
+    // });
     </script>
 
 
