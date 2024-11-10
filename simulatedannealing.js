@@ -29,7 +29,7 @@ function simulatedAnnealing(initialCubeArray) {
             deltaETValues,
             stuckIterations,
             duration: 0,
-            iterations: 0
+            iteration: 0
         };
     }
 
@@ -78,7 +78,7 @@ function simulatedAnnealing(initialCubeArray) {
         scores, 
         deltaETValues, 
         stuckIterations, 
-        iterations: iteration 
+        iteration: iteration 
     };
 }
 
