@@ -31,17 +31,7 @@ function evaluate(cubeArray) {
         }
     }
 
-    // Periksa dua diagonal dalam setiap layer
-    for (let layer = 0; layer < size; layer++) {
-        let mainDiagonalSum = 0;
-        let secondaryDiagonalSum = 0;
-        for (let i = 0; i < size; i++) {
-            mainDiagonalSum += getValue(layer, i, i);
-            secondaryDiagonalSum += getValue(layer, i, size - i - 1);
-        }
-        if (mainDiagonalSum === magicNumber) matchingLines++;
-        if (secondaryDiagonalSum === magicNumber) matchingLines++;
-    }
+   
 
     // Periksa tiang (baris vertikal melalui layer-layer)
     for (let i = 0; i < size; i++) {
@@ -71,28 +61,38 @@ function evaluate(cubeArray) {
     if (spaceDiagonal3 === magicNumber) matchingLines++;
     if (spaceDiagonal4 === magicNumber) matchingLines++;
 
-    // Periksa face diagonals pada semua wajah kubus
-    for (let i = 0; i < size; i++) {
-        // Face diagonals pada baris (dari depan ke belakang di setiap kolom)
-        let faceDiagonal1 = 0;
-        let faceDiagonal2 = 0;
-        for (let j = 0; j < size; j++) {
-            faceDiagonal1 += getValue(j, i, j);             // Kiri atas ke kanan bawah pada wajah baris
-            faceDiagonal2 += getValue(j, i, size - j - 1);  // Kanan atas ke kiri bawah pada wajah baris
+    for (let layer = 0; layer < size; layer++) {
+        // Face diagonals pada XY-plane (per layer Z)
+        let faceDiagonalXY1 = 0;
+        let faceDiagonalXY2 = 0;
+        for (let i = 0; i < size; i++) {
+            faceDiagonalXY1 += getValue(layer, i, i);              // Kiri atas ke kanan bawah di XY-plane
+            faceDiagonalXY2 += getValue(layer, i, size - i - 1);   // Kanan atas ke kiri bawah di XY-plane
         }
-        if (faceDiagonal1 === magicNumber) matchingLines++;
-        if (faceDiagonal2 === magicNumber) matchingLines++;
+        if (faceDiagonalXY1 === magicNumber) matchingLines++;
+        if (faceDiagonalXY2 === magicNumber) matchingLines++;
 
-        // Face diagonals pada kolom (dari depan ke belakang di setiap baris)
-        let faceDiagonal3 = 0;
-        let faceDiagonal4 = 0;
-        for (let j = 0; j < size; j++) {
-            faceDiagonal3 += getValue(j, j, i);             // Kiri atas ke kanan bawah pada wajah kolom
-            faceDiagonal4 += getValue(j, size - j - 1, i);  // Kanan atas ke kiri bawah pada wajah kolom
+        // Face diagonals pada XZ-plane (per layer Y)
+        let faceDiagonalXZ1 = 0;
+        let faceDiagonalXZ2 = 0;
+        for (let i = 0; i < size; i++) {
+            faceDiagonalXZ1 += getValue(i, layer, i);              // Kiri atas ke kanan bawah di XZ-plane
+            faceDiagonalXZ2 += getValue(i, layer, size - i - 1);   // Kanan atas ke kiri bawah di XZ-plane
         }
-        if (faceDiagonal3 === magicNumber) matchingLines++;
-        if (faceDiagonal4 === magicNumber) matchingLines++;
+        if (faceDiagonalXZ1 === magicNumber) matchingLines++;
+        if (faceDiagonalXZ2 === magicNumber) matchingLines++;
+
+        // Face diagonals pada YZ-plane (per layer X)
+        let faceDiagonalYZ1 = 0;
+        let faceDiagonalYZ2 = 0;
+        for (let i = 0; i < size; i++) {
+            faceDiagonalYZ1 += getValue(i, i, layer);              // Kiri atas ke kanan bawah di YZ-plane
+            faceDiagonalYZ2 += getValue(size - i - 1, i, layer);   // Kanan atas ke kiri bawah di YZ-plane
+        }
+        if (faceDiagonalYZ1 === magicNumber) matchingLines++;
+        if (faceDiagonalYZ2 === magicNumber) matchingLines++;
     }
+
 
     return matchingLines;
 }
