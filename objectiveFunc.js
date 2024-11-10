@@ -97,8 +97,14 @@ function evaluate(cubeArray) {
     return matchingLines;
 }
 
+let chartInstance = null;
 
 function displayResults(result, cubeNumbers, chartId) {
+
+    if (chartInstance) {
+        chartInstance.destroy();
+    }
+    
     // Menampilkan grafik objective function
     const ctx = document.getElementById(chartId).getContext('2d');
     new Chart(ctx, {
