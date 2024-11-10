@@ -4,44 +4,14 @@ document.getElementById('startStochasticHillClimb').addEventListener('click', ()
 
     // Tampilkan hasil menggunakan fungsi displayResults dari objectiveFunc.js
     displayResults(result, cubeNumbers, 'objectiveChart');
+
 });
-
-function displayResults(result, cubeNumbers, chartId) {
-    // Menampilkan grafik objective function
-    const ctx = document.getElementById(chartId).getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: result.scores.map((_, i) => i),
-            datasets: [{
-                label: 'Objective Function Value',
-                data: result.scores,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                fill: false,
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: { title: { display: true, text: 'Iteration' } },
-                y: { title: { display: true, text: 'Objective Value' } }
-            }
-        }
-    });
-
-    // Menampilkan hasil di konsol
-    console.log("State Awal:", cubeNumbers);
-    console.log("State Akhir:", result.finalState);
-    console.log("Nilai Objective Function Akhir:", result.finalScore);
-    console.log("Durasi Pencarian:", result.duration, "detik");
-    console.log("Jumlah Iterasi:", result.iteration);
-}
 
 function stochasticHillClimbing(initialCubeArray) {
     let currentState = [...initialCubeArray];
     let currentScore = evaluate(currentState); // Hitung nilai awal objective function
     let iteration = 0;
-    const maxIterations = 1000; // Maksimum iterasi
+    const maxIterations = 10000; // Maksimum iterasi
     const scores = [currentScore];
 
     while (iteration < maxIterations) {
@@ -56,6 +26,9 @@ function stochasticHillClimbing(initialCubeArray) {
             currentState = randomNeighbor;
             currentScore = neighborScore;
         }
+
+        cubeNumbers = [...currentState]; // Salin state baru ke cubeNumbers
+        renderNumbers(); 
 
         // Simpan skor untuk visualisasi
         scores.push(currentScore);
