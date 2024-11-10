@@ -134,3 +134,5 @@ function displayResults(result, cubeNumbers, chartId) {
     console.log("Durasi Pencarian:", result.duration, "detik");
     console.log("Jumlah Iterasi:", result.iteration);
 }
+
+

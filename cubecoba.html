@@ -46,13 +46,16 @@
     <button id="calculateSumButton">Calculate Sum of First Row</button>
     <button id="CalculateObj">cccc</button>
     <button id="magiccube">build magic cube</button>
+    <button id="gene">gen</button>
+    <button id="startSimulatedAnnealing">Run Simulated Annealing</button>
 
 
     <!-- steepestAscentHillClimbing -->
-    <button id="startHillClimb">Run Hill Climbing</button>
+    <button id="startSteepestAscentHillClimb">Run Steepest Ascent Hill Climbing</button>
     <div id="finalScore">Final Score: <span id="finalScoreValue">0</span></div>
     <div id="iterationCount">Iterations: <span id="iterationValue">0</span></div>
     <div id="duration">Duration: <span id="durationValue">0</span> seconds</div>
+
     <!-- grafik -->
     <canvas id="objectiveChart" width="400" height="200"></canvas>
 
@@ -182,13 +185,21 @@
         //     cubebeng.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         // });
 
-        document.getElementById('startHillClimb').addEventListener('click', () => {
-        // Jalankan algoritma steepestAscentHillClimbing dan simpan hasilnya
+        // document.getElementById('startHillClimb').addEventListener('click', () => {
+        // // Jalankan algoritma steepestAscentHillClimbing dan simpan hasilnya
+        // const result = steepestAscentHillClimbing(cubeNumbers);
+
+        // // Panggil displayResults untuk menampilkan hasilnya
+        // displayResults(result, cubeNumbers, 'objectiveChart'); 
+        // });
+
+        document.getElementById('startSteepestAscentHillClimb').addEventListener('click', () => {
+        // Jalankan algoritma steepestAscentHillClimbing
         const result = steepestAscentHillClimbing(cubeNumbers);
 
-        // Panggil displayResults untuk menampilkan hasilnya
-        displayResults(result, cubeNumbers, 'objectiveChart'); 
-        });
+        // Tampilkan hasil menggunakan fungsi displayResults dari objectiveFunc.js
+        displayResults(result, cubeNumbers, 'objectiveChart');
+    });
         // STEEPEST ASCENT HILL CLIMBING 
     //     document.getElementById('startHillClimb').addEventListener('click', () => {
     //     const result = steepestAscentHillClimbing(cubeNumbers);
@@ -230,8 +241,9 @@
 
     <script src="cursorgrab.js"></script>
     <script src="objectiveFunc.js"></script>
-    <script src="steepestHillClimbing.js"></script>
+    <script src="steepestAscentHillClimbing.js"></script>
     <script src="simulatedannealing.js"></script>
+    <script src="gen.js"></script>
 
 </body>
 </html>

@@ -1,4 +1,13 @@
 const mutationProbability = 0.1; 
+document.getElementById('gene').addEventListener('click', () => {
+    // Jalankan algoritma stochasticHillClimbing
+    const result = geneticAlgorithm(100,100);
+    cubeNumbers = result.finalState;
+    renderNumbers();
+
+    // Tampilkan hasil menggunakan fungsi displayResults dari objectiveFunc.js
+    displayResults(result, cubeNumbers, 'objectiveChart');
+});
 
 
 
@@ -73,37 +82,72 @@ function mutate(individual) {
     [individual[index1], individual[index2]] = [individual[index2], individual[index1]];
 }
 
-function geneticAlgorithm(populationSize, generations) {
-    let population = initializePopulation(populationSize);
+function geneticAlgorithm(maxPopulationSize, maxIterations) {
+    let population = initializePopulation(10); // Populasi awal dengan 10 individu
+    let awalan = population[0];
     let bestIndividual = population[0];
     let bestFitness = evaluate(bestIndividual);
+    let generationCount = 0;
+    let scores=[];
+    let endscore=0;
+    const mulai = Date.now();
 
-    for (let gen = 0; gen < generations; gen++) {
+    while (generationCount < maxIterations && population.length <= maxPopulationSize) {
+        generationCount++;
+
+        // Urutkan populasi berdasarkan fitness terbaik
         population.sort((a, b) => evaluate(b) - evaluate(a));
 
+        // Update individu terbaik jika ada peningkatan
         if (evaluate(population[0]) > bestFitness) {
             bestIndividual = population[0];
             bestFitness = evaluate(bestIndividual);
         }
+        scores.push(bestFitness);
 
-        const newPopulation = [];
-        while (newPopulation.length < populationSize) {
-            const parent1 = population[Math.floor(Math.random() * populationSize)];
-            const parent2 = population[Math.floor(Math.random() * populationSize)];
-            let child = crossover(parent1, parent2);
+        // Pilih dua individu terbaik untuk dijadikan orang tua
+        const parent1 = population[0];
+        const parent2 = population[1];
 
-            if (Math.random() < mutationProbability) {
-                mutate(child);
-            }
+        // Hasilkan anak melalui crossover
+        let child = crossover(parent1, parent2);
 
-            newPopulation.push(child);
+        // Mutasi jika memenuhi probabilitas
+        if (Math.random() < mutationProbability) {
+            mutate(child);
         }
 
-        population = newPopulation;
+        // Masukkan anak ke dalam populasi
+        population.push(child);
 
-        console.log(`Generation ${gen + 1}: Best Fitness = ${bestFitness}`);
-        if (bestFitness === 109) break; // Jika mencapai 109 garis, berhenti
+        // Potong populasi agar tidak melebihi maxPopulationSize
+        if (population.length > maxPopulationSize) {
+            population = population.slice(0, maxPopulationSize);
+        }
+
+        console.log(`Generation ${generationCount}: Best Fitness = ${bestFitness}`);
     }
+    const akhir = Date.now();
+    const berraa = (akhir - mulai) / 1000;
 
-    return bestIndividual;
+    console.log(`Algorithm stopped after ${generationCount} generations.`);
+    return {
+        initialState: awalan,
+        finalState: bestIndividual, // Solusi akhir
+        finalScore: endscore, // Nilai objective function akhir
+        scores, // Semua skor untuk iterasi
+        duration:berraa,
+        iteration:generationCount
+    };
+}
+
+// Fungsi inisialisasi populasi awal acak
+function initializePopulation(size) {
+    const population = [];
+    for (let i = 0; i < size; i++) {
+        const individual = Array.from({ length: 125 }, (_, i) => i + 1);
+        shuffleArray(individual);
+        population.push(individual);
+    }
+    return population;
 }
