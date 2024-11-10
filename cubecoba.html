@@ -1,8 +1,15 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- grafik -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <link rel="stylesheet" href="cubec.css">
   <title>CubeAITop</title>
+
+  
+
 </head>
 <body>
     <main class="env">
@@ -38,6 +45,16 @@
     <button id="repair">pair</button>
     <button id="calculateSumButton">Calculate Sum of First Row</button>
     <button id="CalculateObj">cccc</button>
+
+
+    <!-- steepestAscentHillClimbing -->
+    <button id="startHillClimb">Run Hill Climbing</button>
+    <div id="finalScore">Final Score: <span id="finalScoreValue">0</span></div>
+    <div id="iterationCount">Iterations: <span id="iterationValue">0</span></div>
+    <div id="duration">Duration: <span id="durationValue">0</span> seconds</div>
+    <!-- grafik -->
+    <canvas id="objectiveChart" width="400" height="200"></canvas>
+
   
   <div id="result">Sum of First Row: <span id="sumDisplay">0</span></div>
   <div id="result1">Sum of obj: <span id="sumObj">0</span></div>
@@ -118,12 +135,51 @@
     
         //     cubebeng.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         // });
+
+        // STEEPEST ASCENT HILL CLIMBING 
+        document.getElementById('startHillClimb').addEventListener('click', () => {
+        const result = steepestAscentHillClimbing(cubeNumbers);
+
+        // Tampilkan hasilnya
+            document.getElementById('finalScoreValue').textContent = result.finalScore;
+            document.getElementById('iterationValue').textContent = result.iteration;
+            document.getElementById('durationValue').textContent = result.duration.toFixed(2);
+
+            const ctx = document.getElementById('objectiveChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: result.scores.map((_, i) => i),
+                    datasets: [{
+                        label: 'Objective Function Value',
+                        data: result.scores,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        fill: false,
+                    }]
+                },
+        options: {
+            responsive: true,
+            scales: {
+                x: { title: { display: true, text: 'Iteration' } },
+                y: { title: { display: true, text: 'Objective Value' } }
+            }
+        }
+    });
+
+            console.log("State Awal:", cubeNumbers);
+            console.log("State Akhir:", result.finalState);
+            console.log("Nilai Objective Function Akhir:", result.finalScore);
+            console.log("Durasi Pencarian:", result.duration, "detik");
+            console.log("Jumlah Iterasi:", result.iteration);
+    });
+
     
     </script>
 
 
     <script src="cursorgrab.js"></script>
     <script src="objectiveFunc.js"></script>
+    <script src="steepestHillClimbing.js"></script>
 
 </body>
 </html>
