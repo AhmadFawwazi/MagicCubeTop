@@ -71,6 +71,28 @@ function evaluate(cubeArray) {
     if (spaceDiagonal3 === magicNumber) matchingLines++;
     if (spaceDiagonal4 === magicNumber) matchingLines++;
 
+    // Periksa face diagonals pada semua wajah kubus
+    for (let i = 0; i < size; i++) {
+        // Face diagonals pada baris (dari depan ke belakang di setiap kolom)
+        let faceDiagonal1 = 0;
+        let faceDiagonal2 = 0;
+        for (let j = 0; j < size; j++) {
+            faceDiagonal1 += getValue(j, i, j);             // Kiri atas ke kanan bawah pada wajah baris
+            faceDiagonal2 += getValue(j, i, size - j - 1);  // Kanan atas ke kiri bawah pada wajah baris
+        }
+        if (faceDiagonal1 === magicNumber) matchingLines++;
+        if (faceDiagonal2 === magicNumber) matchingLines++;
+
+        // Face diagonals pada kolom (dari depan ke belakang di setiap baris)
+        let faceDiagonal3 = 0;
+        let faceDiagonal4 = 0;
+        for (let j = 0; j < size; j++) {
+            faceDiagonal3 += getValue(j, j, i);             // Kiri atas ke kanan bawah pada wajah kolom
+            faceDiagonal4 += getValue(j, size - j - 1, i);  // Kanan atas ke kiri bawah pada wajah kolom
+        }
+        if (faceDiagonal3 === magicNumber) matchingLines++;
+        if (faceDiagonal4 === magicNumber) matchingLines++;
+    }
+
     return matchingLines;
 }
-
