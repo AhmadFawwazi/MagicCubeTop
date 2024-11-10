@@ -128,7 +128,7 @@ function displayResults(result, cubeNumbers, chartId) {
     });
 
     // Menampilkan hasil di konsol
-    console.log("State Awal:", cubeNumbers);
+    console.log("State Awal:", result.cubeNumbers);
     console.log("State Akhir:", result.finalState);
     console.log("Nilai Objective Function Akhir:", result.finalScore);
     console.log("Durasi Pencarian:", result.duration, "detik");
