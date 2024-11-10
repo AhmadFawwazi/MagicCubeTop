@@ -1,12 +1,12 @@
 const cube = document.getElementById('cubebeng');
 
-// Variabel rotasi dan drag
+
 let isDragging = false;
 let startX, startY;
-let currentRotationX = 30; // Sudut awal sumbu X
-let currentRotationY = 45; // Sudut awal sumbu Y
+let currentRotationX = 30; 
+let currentRotationY = 45; 
 
-//memulai drag saat mouse ditekan
+
 cube.addEventListener('mousedown', (e) => {
     isDragging = true;
     startX = e.clientX;
@@ -14,7 +14,7 @@ cube.addEventListener('mousedown', (e) => {
     cube.style.cursor = 'grabbing';
 });
 
-// rotasi saat mouse digerakkan
+
 document.addEventListener('mousemove', (e) => {
     if (!isDragging) return; // Hanya rotasi jika drag terjadi
 

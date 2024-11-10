@@ -66,8 +66,8 @@ function evaluate(cubeArray) {
         let faceDiagonalXY1 = 0;
         let faceDiagonalXY2 = 0;
         for (let i = 0; i < size; i++) {
-            faceDiagonalXY1 += getValue(layer, i, i);              // Kiri atas ke kanan bawah di XY-plane
-            faceDiagonalXY2 += getValue(layer, i, size - i - 1);   // Kanan atas ke kiri bawah di XY-plane
+            faceDiagonalXY1 += getValue(layer, i, i);              
+            faceDiagonalXY2 += getValue(layer, i, size - i - 1);   
         }
         if (faceDiagonalXY1 === magicNumber) matchingLines++;
         if (faceDiagonalXY2 === magicNumber) matchingLines++;
@@ -76,8 +76,8 @@ function evaluate(cubeArray) {
         let faceDiagonalXZ1 = 0;
         let faceDiagonalXZ2 = 0;
         for (let i = 0; i < size; i++) {
-            faceDiagonalXZ1 += getValue(i, layer, i);              // Kiri atas ke kanan bawah di XZ-plane
-            faceDiagonalXZ2 += getValue(i, layer, size - i - 1);   // Kanan atas ke kiri bawah di XZ-plane
+            faceDiagonalXZ1 += getValue(i, layer, i);              
+            faceDiagonalXZ2 += getValue(i, layer, size - i - 1);   
         }
         if (faceDiagonalXZ1 === magicNumber) matchingLines++;
         if (faceDiagonalXZ2 === magicNumber) matchingLines++;
@@ -86,8 +86,8 @@ function evaluate(cubeArray) {
         let faceDiagonalYZ1 = 0;
         let faceDiagonalYZ2 = 0;
         for (let i = 0; i < size; i++) {
-            faceDiagonalYZ1 += getValue(i, i, layer);              // Kiri atas ke kanan bawah di YZ-plane
-            faceDiagonalYZ2 += getValue(size - i - 1, i, layer);   // Kanan atas ke kiri bawah di YZ-plane
+            faceDiagonalYZ1 += getValue(i, i, layer);            
+            faceDiagonalYZ2 += getValue(size - i - 1, i, layer);   
         }
         if (faceDiagonalYZ1 === magicNumber) matchingLines++;
         if (faceDiagonalYZ2 === magicNumber) matchingLines++;
@@ -100,17 +100,18 @@ function evaluate(cubeArray) {
 let chartInstance = null;
 
 function displayResults(result, cubeNumbers, chartId) {
+    const ctx = document.getElementById(chartId).getContext('2d');
 
+    // Jika ada instance chart sebelumnya, hancurkan terlebih dahulu
     if (chartInstance) {
         chartInstance.destroy();
     }
-    
-    // Menampilkan grafik objective function
-    const ctx = document.getElementById(chartId).getContext('2d');
-    new Chart(ctx, {
+
+    // Buat chart baru dan simpan di chartInstance
+    chartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: result.scores.map((_, i) => i),
+            labels: result.scores.map((_, i) => i + 1),
             datasets: [{
                 label: 'Objective Function Value',
                 data: result.scores,
@@ -128,7 +129,7 @@ function displayResults(result, cubeNumbers, chartId) {
     });
 
     // Menampilkan hasil di konsol
-    console.log("State Awal:", result.cubeNumbers);
+    console.log("State Awal:", result.initialState);
     console.log("State Akhir:", result.finalState);
     console.log("Nilai Objective Function Akhir:", result.finalScore);
     console.log("Durasi Pencarian:", result.duration, "detik");

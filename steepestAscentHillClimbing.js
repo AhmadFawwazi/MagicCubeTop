@@ -57,7 +57,7 @@ function steepestAscentHillClimbing(initialCubeArray) {
     console.log("Final Iteration Reached:", iteration);
 
     return {
-        cubeNumbers: initialCubeArray,
+        initialState: initialCubeArray,
         finalState: currentState, // Solusi akhir
         finalScore: currentScore, // Nilai objective function akhir
         scores, // Semua skor untuk iterasi

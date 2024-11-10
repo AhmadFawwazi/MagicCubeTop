@@ -44,7 +44,7 @@ function stochasticHillClimbing(initialCubeArray) {
     
 
     return {
-        cubeNumbers: initialCubeArray, // state awal
+        initialState: initialCubeArray, // state awal
         finalState: currentState, // state akhir
         finalScore: currentScore, // Nilai objective function akhir
         scores, // Semua skor untuk iterasi

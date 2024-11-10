@@ -2,7 +2,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- grafik -->
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <link rel="stylesheet" href="cubec.css">
@@ -39,36 +39,38 @@
                 </div>
             </div>
         </div>
-
     </main>
-    <button id="randomizeButton">rrr</button>
-    <button id="repair">pair</button>
-    <button id="calculateSumButton">Calculate Sum of First Row</button>
-    <button id="CalculateObj">cccc</button>
+
+    <button id="randomizeButton">Randomize</button>
+    <br>
+    <button id="repair">Repair</button>
+    <br>
+    <button id="CalculateObj">Calculate Current Objective</button>
+    <br>
     <button id="magiccube">build magic cube</button>
 
-    <!-- Button Algoritma -->
+    <br>
     <button id="startSteepestAscentHillClimb">Run Steepest Ascent Hill Climbing</button>
+    <br>
     <button id="startStochasticHillClimb">Run Stochastic Hill Climbing</button>
+    <br>
     <button id="startSimulatedAnnealing">Run Simulated Annealing</button>
-    <button id="gene">gen</button>
+    <br>
+    <button id="gene">Run Genetic</button>
 
     <div id="finalScore">Final Score: <span id="finalScoreValue">0</span></div>
     <div id="iterationCount">Iterations: <span id="iterationValue">0</span></div>
     <div id="duration">Duration: <span id="durationValue">0</span> seconds</div>
-
-    <!-- grafik -->
+    <div id="result1">Sum of obj: <span id="sumObj">0</span></div>
+    
     <canvas id="objectiveChart" width="400" height="200"></canvas>
-
-  
-  <div id="result">Sum of First Row: <span id="sumDisplay">0</span></div>
-  <div id="result1">Sum of obj: <span id="sumObj">0</span></div>
+    
     <script>
         const recubeNumbers = Array.from({ length: 125 }, (_, i) => i + 1);
         let randomArray = [...recubeNumbers]; 
         let cubeNumbers = [...recubeNumbers]; 
     
-        // Fungsi untuk mengacak isi array
+       
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -76,11 +78,7 @@
             }
         }
     
-      document.getElementById('calculateSumButton').addEventListener('click', () => {
-      // Ambil nilai dari array cubeNumbers indeks 0 sampai 4 dan jumlahkan
-      const firstRowSum = cubeNumbers[0] + cubeNumbers[1] + cubeNumbers[2] + cubeNumbers[3] + cubeNumbers[4];
-      document.getElementById('sumDisplay').textContent = firstRowSum;
-    });
+      
       document.getElementById('CalculateObj').addEventListener('click', () => {
       const jawab = evaluate(cubeNumbers);
       document.getElementById('sumObj').textContent = jawab;
@@ -116,7 +114,7 @@
         });
 
         function generateMagicCube() {
-            // Susunan angka dari Trump and Boyer's order 5 perfect magic cube untuk semua layer (Layer 1 hingga Layer 5)
+            
             return [
                 // Layer 1
                 25, 16, 80, 104, 90,
@@ -155,7 +153,7 @@
             ];
         }
 
-        // Inisialisasi tampilan awal
+        
         document.querySelectorAll('.grid').forEach(grid => {
             for (let i = 0; i < 25; i++) { 
                 const drin = document.createElement('div'); 
@@ -172,74 +170,8 @@
         });
     
       
-        // const cubebeng = document.querySelector('.cubebeng');
-        // const env = document.querySelector('.env');
-    
-        // env.addEventListener('mousemove', (e) => {
-        //     const { width, height, left, top } = env.getBoundingClientRect();
-        //     const mouseX = e.clientX - left - width / 2;
-        //     const mouseY = e.clientY - top - height / 2;
-    
-        //     const rotateY = (mouseX / width) * 800;
-        //     const rotateX = -(mouseY / height) * 800;
-    
-        //     cubebeng.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        // });
-
-        // document.getElementById('startHillClimb').addEventListener('click', () => {
-        // // Jalankan algoritma steepestAscentHillClimbing dan simpan hasilnya
-        // const result = steepestAscentHillClimbing(cubeNumbers);
-
-        // // Panggil displayResults untuk menampilkan hasilnya
-        // displayResults(result, cubeNumbers, 'objectiveChart'); 
-        // });
-
-    //     document.getElementById('startSteepestAscentHillClimb').addEventListener('click', () => {
-    //     // Jalankan algoritma steepestAscentHillClimbing
-    //     const result = steepestAscentHillClimbing(cubeNumbers);
-
-    //     // Tampilkan hasil menggunakan fungsi displayResults dari objectiveFunc.js
-    //     displayResults(result, cubeNumbers, 'objectiveChart');
-    // });
-        // STEEPEST ASCENT HILL CLIMBING 
-    //     document.getElementById('startHillClimb').addEventListener('click', () => {
-    //     const result = steepestAscentHillClimbing(cubeNumbers);
-
-    //     // Tampilkan hasilnya
-    //         document.getElementById('finalScoreValue').textContent = result.finalScore;
-    //         document.getElementById('iterationValue').textContent = result.iteration;
-    //         document.getElementById('durationValue').textContent = result.duration.toFixed(2);
-
-    //         const ctx = document.getElementById('objectiveChart').getContext('2d');
-    //         new Chart(ctx, {
-    //             type: 'line',
-    //             data: {
-    //                 labels: result.scores.map((_, i) => i),
-    //                 datasets: [{
-    //                     label: 'Objective Function Value',
-    //                     data: result.scores,
-    //                     borderColor: 'rgba(75, 192, 192, 1)',
-    //                     fill: false,
-    //                 }]
-    //             },
-    //     options: {
-    //         responsive: true,
-    //         scales: {
-    //             x: { title: { display: true, text: 'Iteration' } },
-    //             y: { title: { display: true, text: 'Objective Value' } }
-    //         }
-    //     }
-    // });
-
-    //         console.log("State Awal:", cubeNumbers);
-    //         console.log("State Akhir:", result.finalState);
-    //         console.log("Nilai Objective Function Akhir:", result.finalScore);
-    //         console.log("Durasi Pencarian:", result.duration, "detik");
-    //         console.log("Jumlah Iterasi:", result.iteration);
-    // });
+      
     </script>
-
-
     <script src="cursorgrab.js"></script>
     <script src="objectiveFunc.js"></script>
     <script src="steepestAscentHillClimbing.js"></script>

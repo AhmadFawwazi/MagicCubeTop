@@ -73,6 +73,7 @@ function simulatedAnnealing(initialCubeArray) {
     const duration = (endTime - startTime) / 1000;
 
     return {
+        initialState: initialCubeArray,
         finalState: currentState,
         finalScore: currentScore, 
         scores, 
