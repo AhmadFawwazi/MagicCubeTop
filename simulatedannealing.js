@@ -15,8 +15,24 @@ function simulatedAnnealing(initialCubeArray) {
     const stuckThreshold = 50;
     let stuckCounter = 0; 
     const stuckIterations = [];
+    const optimalScore = 109;
 
     let iteration = 0;
+    const startTime = Date.now();
+
+    if (currentScore === optimalScore) {
+        console.log("Cube adalah magic sube sempurna dari awal jadi tidak usah dicari lagi.");
+        return {
+            finalState: currentState,
+            finalScore: currentScore,
+            scores,
+            deltaETValues,
+            stuckIterations,
+            duration: 0,
+            iterations: 0
+        };
+    }
+
 
     while (iteration < maxIterations) {
         iteration++;
@@ -48,10 +64,13 @@ function simulatedAnnealing(initialCubeArray) {
         temperature *= coolingRate;
 
         if (temperature < 1e-3) {
-            console.log("Temperature threshold reached. Ending process.");
+            console.log("Temperature threshold reached or optimal solution maintained. Ending process.");
             break;
         }
     }
+    
+    const endTime = Date.now();
+    const duration = (endTime - startTime) / 1000;
 
     return {
         finalState: currentState,
