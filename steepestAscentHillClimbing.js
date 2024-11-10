@@ -7,72 +7,14 @@ document.getElementById('startSteepestAscentHillClimb').addEventListener('click'
 
 });
 
-// function stochasticHillClimbing(initialCubeArray) {
-//     let currentState = [...initialCubeArray];
-//     let currentScore = evaluate(currentState); // Hitung nilai awal objective function
-//     let iteration = 0;
-//     const maxIterations = 1000; // Maksimum iterasi
-//     const scores = [currentScore];
-
-//     // const startTime = Date.now(); 
-//     while (iteration < maxIterations) {
-//         iteration++;
-
-//         // Hasilkan neighbor secara acak
-//         const randomNeighbor = generateRandomNeighbor(currentState);
-//         const neighborScore = evaluate(randomNeighbor);
-
-//         // Jika neighbor lebih baik, pindah ke neighbor
-//         if (neighborScore > currentScore) {
-//             currentState = randomNeighbor;
-//             currentScore = neighborScore;
-//         }
-
-//         cubeNumbers = [...currentState]; // Salin state baru ke cubeNumbers
-//         renderNumbers(); 
-
-//         // Simpan skor untuk visualisasi
-//         scores.push(currentScore);
-
-//         // Jika tidak ada neighbor lebih baik (local optimum), berhenti
-//         if (iteration === maxIterations) {
-//             console.log("Max iterations reached.");
-//             break;
-//         }
-//     }
-//     // const endTime = Date.now();
-    
-
-//     return {
-//         cubeNumbers: initialCubeArray,
-//         finalState: currentState, // Solusi akhir
-//         finalScore: currentScore, // Nilai objective function akhir
-//         scores, // Semua skor untuk iterasi
-//         // duration : (endTime - startTime) / 1000,
-//         iterations: iteration // Total iterasi yang dijalankan
-//     };
-// }
-
-
-// function generateRandomNeighbor(cubeArray) {
-
-//     const newNeighbor = [...cubeArray];
-//     const i = Math.floor(Math.random() * (cubeArray.length + 1));
-//     const j = Math.floor(Math.random() * (cubeArray.length + 1));
-
-//     // Tukar dua elemen secara acak
-//     [newNeighbor[i], newNeighbor[j]] = [newNeighbor[j], newNeighbor[i]];
-
-//     return newNeighbor;
-// }
-
-
 function steepestAscentHillClimbing(initialCubeArray) {
     let currentState = [...initialCubeArray];
     let currentScore = evaluate(currentState); // Hitung nilai awal objective function
     let iteration = 0;
     const maxIterations = 1000; // Maksimum iterasi
     const scores = [currentScore];
+
+    const steepeststartTime = Date.now();
 
     while (iteration < maxIterations) {
         iteration++;
@@ -110,6 +52,8 @@ function steepestAscentHillClimbing(initialCubeArray) {
         scores.push(currentScore);
     }
 
+    const steepestendTime = Date.now();
+
     console.log("Final Iteration Reached:", iteration);
 
     return {
@@ -117,7 +61,8 @@ function steepestAscentHillClimbing(initialCubeArray) {
         finalState: currentState, // Solusi akhir
         finalScore: currentScore, // Nilai objective function akhir
         scores, // Semua skor untuk iterasi
-        iterations: iteration // Total iterasi yang dijalankan
+        duration: (steepestendTime - steepeststartTime) / 1000,
+        iteration: iteration // Total iterasi yang dijalankan
     };
 }
 
