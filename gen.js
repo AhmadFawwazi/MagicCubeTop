@@ -1,42 +1,13 @@
 const mutationProbability = 0.1; 
 document.getElementById('gene').addEventListener('click', () => {
     // Jalankan algoritma stochasticHillClimbing
-    const result = geneticAlgorithm(1000,1000);
+    const result = geneticAlgorithm(100,100);
+    cubeNumbers = result.finalState;
+    renderNumbers();
 
     // Tampilkan hasil menggunakan fungsi displayResults dari objectiveFunc.js
     displayResults(result, cubeNumbers, 'objectiveChart');
 });
-
-function displayResults(result, cubeNumbers, chartId) {
-    // Menampilkan grafik objective function
-    const ctx = document.getElementById(chartId).getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: result.scores.map((_, i) => i),
-            datasets: [{
-                label: 'Objective Function Value',
-                data: result.scores,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                fill: false,
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: { title: { display: true, text: 'Iteration' } },
-                y: { title: { display: true, text: 'Objective Value' } }
-            }
-        }
-    });
-
-    // Menampilkan hasil di konsol
-    console.log("State Awal:", cubeNumbers);
-    console.log("State Akhir:", result.finalState);
-    console.log("Nilai Objective Function Akhir:", result.finalScore);
-    console.log("Durasi Pencarian:", result.duration, "detik");
-    console.log("Jumlah Iterasi:", result.iteration);
-}
 
 
 
@@ -113,10 +84,13 @@ function mutate(individual) {
 
 function geneticAlgorithm(maxPopulationSize, maxIterations) {
     let population = initializePopulation(10); // Populasi awal dengan 10 individu
+    let awalan = population[0];
     let bestIndividual = population[0];
     let bestFitness = evaluate(bestIndividual);
     let generationCount = 0;
     let scores=[];
+    let endscore=0;
+    const mulai = Date.now();
 
     while (generationCount < maxIterations && population.length <= maxPopulationSize) {
         generationCount++;
@@ -153,13 +127,17 @@ function geneticAlgorithm(maxPopulationSize, maxIterations) {
 
         console.log(`Generation ${generationCount}: Best Fitness = ${bestFitness}`);
     }
+    const akhir = Date.now();
+    const berraa = (akhir - mulai) / 1000;
 
     console.log(`Algorithm stopped after ${generationCount} generations.`);
     return {
-    finalState: bestIndividual, // Solusi akhir
-        finalScore: bestFitness, // Nilai objective function akhir
+        initialState: awalan,
+        finalState: bestIndividual, // Solusi akhir
+        finalScore: endscore, // Nilai objective function akhir
         scores, // Semua skor untuk iterasi
-        iterations: maxIterations, // Total iterasi yang dijalankan
+        duration:berraa,
+        iteration:generationCount
     };
 }
 

@@ -1,85 +1,72 @@
-// function steepestAscentHillClimbing(initialCubeArray) {
-//     // Inisialisasi state awal dan objective function
-//     let currentState = [...initialCubeArray];
-//     let currentScore = evaluate(currentState); // Hitung score awal
-//     let iteration = 0;
-//     const scores = [currentScore];  // Array untuk menyimpan score di setiap iterasi
-//     const startTime = Date.now();
+document.getElementById('startSteepestAscentHillClimb').addEventListener('click', () => {
+    // Jalankan algoritma stochasticHillClimbing
+    const result = steepestAscentHillClimbing(cubeNumbers);
 
-//     // Looping untuk pencarian state terbaik
-//     while (true) {
+    // Tampilkan hasil menggunakan fungsi displayResults dari objectiveFunc.js
+    displayResults(result, cubeNumbers, 'objectiveChart');
+
+});
+
+// function stochasticHillClimbing(initialCubeArray) {
+//     let currentState = [...initialCubeArray];
+//     let currentScore = evaluate(currentState); // Hitung nilai awal objective function
+//     let iteration = 0;
+//     const maxIterations = 1000; // Maksimum iterasi
+//     const scores = [currentScore];
+
+//     // const startTime = Date.now(); 
+//     while (iteration < maxIterations) {
 //         iteration++;
 
-//         // Temukan tetangga terbaik (highest-valued neighbor)
-//         const bestNeighbor = findBestNeighbor(currentState);
-//         const bestNeighborScore = evaluate(bestNeighbor);
+//         // Hasilkan neighbor secara acak
+//         const randomNeighbor = generateRandomNeighbor(currentState);
+//         const neighborScore = evaluate(randomNeighbor);
 
-//         // Jika nilai tetangga terbaik tidak lebih baik dari current state, hentikan
-//         if (bestNeighborScore >= currentScore) {
-//             break; // Puncak lokal tercapai, tidak ada perbaikan
+//         // Jika neighbor lebih baik, pindah ke neighbor
+//         if (neighborScore > currentScore) {
+//             currentState = randomNeighbor;
+//             currentScore = neighborScore;
 //         }
 
-//         // Update current state dan score dengan bestNeighbor
-//         currentState = bestNeighbor;
-//         currentScore = bestNeighborScore;
+//         cubeNumbers = [...currentState]; // Salin state baru ke cubeNumbers
+//         renderNumbers(); 
+
+//         // Simpan skor untuk visualisasi
 //         scores.push(currentScore);
+
+//         // Jika tidak ada neighbor lebih baik (local optimum), berhenti
+//         if (iteration === maxIterations) {
+//             console.log("Max iterations reached.");
+//             break;
+//         }
 //     }
+//     // const endTime = Date.now();
+    
 
-//     // Hitung durasi pencarian
-//     const endTime = Date.now();
-//     const duration = (endTime - startTime) / 1000;
-
-//     // Kembalikan hasil pencarian
 //     return {
-//         initialState: initialCubeArray,
-//         finalState: currentState,
-//         finalScore: currentScore,
-//         scores,
-//         duration,
-//         iteration
+//         cubeNumbers: initialCubeArray,
+//         finalState: currentState, // Solusi akhir
+//         finalScore: currentScore, // Nilai objective function akhir
+//         scores, // Semua skor untuk iterasi
+//         // duration : (endTime - startTime) / 1000,
+//         iterations: iteration // Total iterasi yang dijalankan
 //     };
 // }
 
-// // Fungsi untuk menemukan tetangga terbaik (highest-valued neighbor)
-// function findBestNeighbor(cubeArray) {
-//     let bestScore = Infinity;
-//     let bestNeighbor = [...cubeArray];
 
-//     for (let i = 0; i < cubeArray.length; i++) {
-//         for (let j = i + 1; j < cubeArray.length; j++) {
-//             // Buat tetangga dengan menukar elemen ke-i dan ke-j
-//             const neighbor = [...cubeArray];
-//             [neighbor[i], neighbor[j]] = [neighbor[j], neighbor[i]];
-//             const score = evaluate(neighbor);
+// function generateRandomNeighbor(cubeArray) {
 
-//             // Pilih tetangga dengan score terendah (minimizing cost)
-//             if (score < bestScore) {
-//                 bestScore = score;
-//                 bestNeighbor = neighbor;
-//             }
-//         }
-//     }
+//     const newNeighbor = [...cubeArray];
+//     const i = Math.floor(Math.random() * (cubeArray.length + 1));
+//     const j = Math.floor(Math.random() * (cubeArray.length + 1));
 
-//     return bestNeighbor;
+//     // Tukar dua elemen secara acak
+//     [newNeighbor[i], newNeighbor[j]] = [newNeighbor[j], newNeighbor[i]];
+
+//     return newNeighbor;
 // }
 
 
-
-
-
-
-
-/////////////////////
-
-// document.getElementById('startSteepestHillClimb').addEventListener('click', () => {
-//     // Jalankan algoritma steepestAscentHillClimbing
-//     const result = steepestAscentHillClimbing(cubeNumbers);
-
-//     // Tampilkan hasil menggunakan fungsi displayResults dari objectiveFunc.js
-//     displayResults(result, cubeNumbers, 'objectiveChart');
-// });
-
-/////////////////////
 function steepestAscentHillClimbing(initialCubeArray) {
     let currentState = [...initialCubeArray];
     let currentScore = evaluate(currentState); // Hitung nilai awal objective function
@@ -91,7 +78,7 @@ function steepestAscentHillClimbing(initialCubeArray) {
         iteration++;
 
         // Hasilkan semua neighbor
-        const neighbors = generateRandomNeighbor(currentState);
+        const neighbors = steepestgenerateRandomNeighbor(currentState);
 
         // Cari neighbor dengan score terbaik
         let bestNeighbor = null;
@@ -126,16 +113,16 @@ function steepestAscentHillClimbing(initialCubeArray) {
     console.log("Final Iteration Reached:", iteration);
 
     return {
+        cubeNumbers: initialCubeArray,
         finalState: currentState, // Solusi akhir
         finalScore: currentScore, // Nilai objective function akhir
         scores, // Semua skor untuk iterasi
         iterations: iteration // Total iterasi yang dijalankan
     };
 }
-////////////////////////////
 
 
-function generateRandomNeighbor(cubeArray) {
+function steepestgenerateRandomNeighbor(cubeArray) {
     const neighbors = [];
 
     // Iterasi melalui semua pasangan elemen
