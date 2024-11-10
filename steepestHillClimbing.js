@@ -1,43 +1,37 @@
 function steepestAscentHillClimbing(initialCubeArray) {
-    let currentState = [...initialCubeArray];  // Salin array 1D
-    let currentScore = evaluate(currentState);  // Nilai awal dari objective function
+    // Inisialisasi state awal dan objective function
+    let currentState = [...initialCubeArray];
+    let currentScore = evaluate(currentState); // Hitung score awal
     let iteration = 0;
-    const scores = [currentScore];
+    const scores = [currentScore];  // Array untuk menyimpan score di setiap iterasi
     const startTime = Date.now();
 
+    // Looping untuk pencarian state terbaik
     while (true) {
         iteration++;
 
-        // Hasilkan semua tetangga dari solusi saat ini
-        const neighbors = generateNeighbors(currentState);
+        // Temukan tetangga terbaik (highest-valued neighbor)
+        const bestNeighbor = findBestNeighbor(currentState);
+        const bestNeighborScore = evaluate(bestNeighbor);
 
-        // Cari tetangga terbaik
-        let bestNeighbor = null;
-        let bestScore = Infinity;
-        neighbors.forEach(neighbor => {
-            const score = evaluate(neighbor);
-            if (score < bestScore) {
-                bestScore = score;
-                bestNeighbor = neighbor;
-            }
-        });
-
-        scores.push(bestScore);
-
-        // Jika tidak ada perbaikan, hentikan
-        if (bestScore >= currentScore) {
-            break;
+        // Jika nilai tetangga terbaik tidak lebih baik dari current state, hentikan
+        if (bestNeighborScore >= currentScore) {
+            break; // Puncak lokal tercapai, tidak ada perbaikan
         }
 
-        // Perbarui state dan score
+        // Update current state dan score dengan bestNeighbor
         currentState = bestNeighbor;
-        currentScore = bestScore;
+        currentScore = bestNeighborScore;
+        scores.push(currentScore);
     }
 
+    // Hitung durasi pencarian
     const endTime = Date.now();
-    const duration = (endTime - startTime) / 1000; // Dalam detik
+    const duration = (endTime - startTime) / 1000;
 
+    // Kembalikan hasil pencarian
     return {
+        initialState: initialCubeArray,
         finalState: currentState,
         finalScore: currentScore,
         scores,
@@ -46,17 +40,25 @@ function steepestAscentHillClimbing(initialCubeArray) {
     };
 }
 
+// Fungsi untuk menemukan tetangga terbaik (highest-valued neighbor)
+function findBestNeighbor(cubeArray) {
+    let bestScore = Infinity;
+    let bestNeighbor = [...cubeArray];
 
-// Fungsi untuk membuat tetangga dari array cube
-function generateNeighbors(cubeArray) {
-    const neighbors = [];
     for (let i = 0; i < cubeArray.length; i++) {
         for (let j = i + 1; j < cubeArray.length; j++) {
-            const newNeighbor = [...cubeArray];
-            [newNeighbor[i], newNeighbor[j]] = [newNeighbor[j], newNeighbor[i]]; // Tukar dua elemen
-            neighbors.push(newNeighbor);
+            // Buat tetangga dengan menukar elemen ke-i dan ke-j
+            const neighbor = [...cubeArray];
+            [neighbor[i], neighbor[j]] = [neighbor[j], neighbor[i]];
+            const score = evaluate(neighbor);
+
+            // Pilih tetangga dengan score terendah (minimizing cost)
+            if (score < bestScore) {
+                bestScore = score;
+                bestNeighbor = neighbor;
+            }
         }
     }
-    return neighbors;
-}
 
+    return bestNeighbor;
+}
