@@ -18,7 +18,7 @@ function simulatedAnnealing(initialCubeArray) {
     const optimalScore = 109;
 
     let iteration = 0;
-    const startTime = Date.now();
+    const simulatedannealingStartTime = Date.now();
 
     if (currentScore === optimalScore) {
         console.log("Cube adalah magic sube sempurna dari awal jadi tidak usah dicari lagi.");
@@ -69,14 +69,14 @@ function simulatedAnnealing(initialCubeArray) {
         }
     }
     
-    const endTime = Date.now();
-    const duration = (endTime - startTime) / 1000;
+    const simulatedannealingEndTime = Date.now();
 
     return {
         initialState: initialCubeArray,
         finalState: currentState,
         finalScore: currentScore, 
         scores, 
+        duration: (simulatedannealingEndTime - simulatedannealingStartTime) / 1000,
         deltaETValues, 
         stuckIterations, 
         iteration: iteration 
