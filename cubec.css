@@ -109,17 +109,36 @@ section.chart {
 }
 
 /* Controls Section Styling */
-.controls {
+/* .controls {
     display: flex;
     flex-wrap: wrap;
     gap: 10px; 
+    justify-content: center;
+    padding: 50px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+} */
+
+/* Tambahkan ini pada kontainer induk yang membungkus .controls, jika ada */
+.container {
+    text-align: center;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     justify-content: center;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin: 20px;
+    margin: 20px auto;
+    max-width: 950px;
 }
+
 
 /* Button Styling */
 .controls button {
@@ -172,4 +191,37 @@ section.chart {
 
 #deltaET, #stuckIterations {
     display: none; 
+}
+
+#valueAwal, #valueAkhir {
+    display: flex;
+    justify-content: center; /* Posisikan di tengah */
+    gap: 20px; /* Jarak antar kotak */
+    margin: 20px auto;
+    flex-wrap: wrap; /* Membungkus ke baris berikutnya */
+    max-width: 80%; /* Tentukan lebar maksimal untuk responsivitas */
+}
+
+.number-box {
+    display: flex;
+    flex-direction: column;
+    width: 250px; /* Lebar kotak */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin: 10px; /* Jarak luar kotak */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.number-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px; /* Jarak antar baris dalam kotak */
+}
+
+.number-box span {
+    width: 18px; /* Lebar untuk teks dalam kotak */
+    text-align: center;
+    color: #333;
 }

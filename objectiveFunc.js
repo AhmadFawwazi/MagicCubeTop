@@ -128,6 +128,37 @@ function displayResults(result, cubeNumbers, chartId) {
         }
     });
 
+    //fungsi buat ngekotakin state
+    function displayState(stateArray, elementId) {
+        const element = document.getElementById(elementId);
+        element.innerHTML = ''; // Bersihkan isi sebelumnya
+    
+        for (let i = 0; i < stateArray.length; i += 25) {
+            const numberBox = document.createElement('div');
+            numberBox.classList.add('number-box');
+    
+            // Ambil 25 angka dari array
+            const subArray = stateArray.slice(i, i + 25);
+    
+            // Buat baris untuk setiap 5 angka
+            for (let j = 0; j < subArray.length; j += 5) {
+                const row = document.createElement('div');
+                row.classList.add('number-row');
+    
+                const rowArray = subArray.slice(j, j + 5);
+                rowArray.forEach(number => {
+                    const span = document.createElement('span');
+                    span.textContent = number;
+                    row.appendChild(span);
+                });
+    
+                numberBox.appendChild(row);
+            }
+    
+            element.appendChild(numberBox);
+        }
+    }
+    
     document.getElementById('finalScoreValue').textContent = result.finalScore;
     document.getElementById('iterationValue').textContent = result.iteration;
     document.getElementById('durationValue').textContent = result.duration;
@@ -140,6 +171,8 @@ function displayResults(result, cubeNumbers, chartId) {
     console.log("Nilai Objective Function Akhir:", result.finalScore);
     console.log("Durasi Pencarian:", result.duration, "detik");
     console.log("Jumlah Iterasi:", result.iteration);
-}
 
+    displayState(result.initialState, 'valueAwal');
+    displayState(result.finalState, 'valueAkhir');
+}
 
