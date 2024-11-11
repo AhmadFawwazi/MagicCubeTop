@@ -2,7 +2,7 @@ document.getElementById('startSteepestAscentHillClimb').addEventListener('click'
     //block biar ga muncul yg annealling
     document.getElementById('deltaET').style.display = 'none';
     document.getElementById('frequencyStuck').style.display = 'none';
-
+})
     // Jalankan algoritma stochasticHillClimbing
 document.getElementById('startSteepestAscentHillClimb').addEventListener('click', () =>
     {
