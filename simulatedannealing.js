@@ -1,6 +1,7 @@
 document.getElementById('startSimulatedAnnealing').addEventListener('click', () => { 
     //buat nampilin deltaet dan freq stuckiter
     document.getElementById('deltaET').style.display = 'block';
+    document.getElementById('populValue').style.display = 'none';
 
     const result = simulatedAnnealing(cubeNumbers);
     displayResults(result, cubeNumbers, 'objectiveChart');
@@ -12,7 +13,7 @@ function simulatedAnnealing(initialCubeArray) {
     let currentScore = evaluate(currentState); 
     let temperature = 1000; 
     const coolingRate = 0.999; 
-    const maxIterations = 50000; 
+    const maxIterations = 5000; 
     const scores = [currentScore];
     const deltaETValues = [];
     const stuckThreshold = 50;

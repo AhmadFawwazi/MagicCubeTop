@@ -2,18 +2,20 @@ const mutateProb = 0.1;
 
 document.getElementById('gene').addEventListener('click', () => {
     //block biar ga muncul yg annealling
-    document.getElementById('deltaET').style.display = 'none';
-    document.getElementById('frequencyStuck').style.display = 'none';
-    
     var maxIter = prompt("Masukkan angka untuk maks iterasi");
     var maxPop = prompt("masukkan angka untuk maks populasi :")
     const result = geneticAlgorithm(maxPop,maxIter);
+    document.getElementById('deltaETValues').style.display = 'none';
+    document.getElementById('stuckValue').style.display = 'none';
+    document.getElementById('populValue').textContent = result.lengthpop;
+    
+   
     cubeNumbers = result.finalState;
     renderNumbers();
 
     // buat visualisasi
     displayResults(result, cubeNumbers, 'objectiveChart');
-    document.getElementById('populValue').textContent = result.lengthpop;
+    
     console.log("Jumlah Individu Populasi yang terbentuk : ", result.lengthpop);
     
 });
@@ -129,10 +131,10 @@ function geneticAlgorithm(maxPop, maxIteration) {
     const durations = (end - start) / 1000;
     console.log(`Algorithm stopped after ${generationCount} generations.`);
     return {
-        initialState: startPop, // State solusi awal
-        finalState: bestIndividual, // State Solusi akhir
-        finalScore: bestFitness, // Nilai objective function akhir
-        scores, // Semua nilai obj per iterasi
+        initialState: startPop, 
+        finalState: bestIndividual, 
+        finalScore: bestFitness, 
+        scores, 
         duration:durations,
         iteration:generationCount,
         lengthpop: population.length,
