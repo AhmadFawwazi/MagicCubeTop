@@ -13,42 +13,42 @@ document.getElementById('startSteepestAscentHillClimb').addEventListener('click'
 
 function steepestAscentHillClimbing(initialCubeArray) 
 {
-    let currentState = [...initialCubeArray];
-    let currentScore = evaluate(currentState); // Menghitung nilai objective function pada current state
+    let current_state = [...initialCubeArray];
+    let current_obj = evaluate(current_state); // Menghitung nilai objective function pada current state
     let iterasi = 0;
-    const maxiterasis = 1000; 
-    const scores = [currentScore];
+    const max_iterasi = 1000; 
+    const scores = [current_obj];
 
     const steepeststartTime = Date.now();
 
-    while (iterasi < maxiterasis) 
+    while (iterasi < max_iterasi) 
     {
         iterasi = iterasi + 1;
 
         // menghasilkan semua neighbor yang ada
-        const neighbors = steepestgenerateRandomNeighbor(currentState);
+        const neighbors = steepestgenerateRandomNeighbor(current_state);
 
         // mencari neighbor dengan score terbaik
-        let bestNeighbor = null;
-        let bestScore = currentScore; 
+        let best_neighbor = null;
+        let best_score = current_obj; 
 
         for (const neighbor of neighbors) 
         {
             const neighborScore = evaluate(neighbor);
-            if (neighborScore > bestScore) 
+            if (neighborScore > best_score) 
             {
-                bestScore = neighborScore;
-                bestNeighbor = neighbor;
+                best_score = neighborScore;
+                best_neighbor = neighbor;
             }
         }
 
         // Jika ada neighbor dengan objective function lebih baik, current state pindah ke neighbor tersebut
-        if (bestNeighbor !== null) 
+        if (best_neighbor !== null) 
         {
-            currentState = bestNeighbor;
-            currentScore = bestScore;
+            current_state = best_neighbor;
+            current_obj = best_score;
 
-            cubeNumbers = [...currentState];
+            cubeNumbers = [...current_state];
             renderNumbers();
         } 
         else 
@@ -58,7 +58,7 @@ function steepestAscentHillClimbing(initialCubeArray)
             break;
         }
         // menyimpan nilai objective function
-        scores.push(currentScore);
+        scores.push(current_obj);
     }
 
     const steepestendTime = Date.now();
@@ -67,8 +67,8 @@ function steepestAscentHillClimbing(initialCubeArray)
 
     return {
         initialState: initialCubeArray,
-        finalState: currentState, // current state final
-        finalScore: currentScore, // Nilai objective function akhir
+        finalState: current_state, // current state final
+        finalScore: current_obj, // Nilai objective function akhir
         scores, // Semua skor untuk iterasi
         duration: (steepestendTime - steepeststartTime) / 1000,
         iteration: iterasi // Total iterasi yang dijalankan
