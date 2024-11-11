@@ -13,7 +13,7 @@ function simulatedAnnealing(initialCubeArray) {
     let currentScore = evaluate(currentState); 
     let temperature = 1000; 
     const coolingRate = 0.999; 
-    const maxIterations = 5000; 
+    const maxIterations = 50000; 
     const scores = [currentScore];
     const deltaETValues = [];
     const stuckThreshold = 50;
