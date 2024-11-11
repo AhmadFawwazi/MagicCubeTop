@@ -162,14 +162,11 @@ function displayResults(result, cubeNumbers, chartId) {
     
     if (result.deltaETValues && result.stuckIterations) {
         document.getElementById('deltaET').style.display = 'block';
-        document.getElementById('frequencyStuck').style.display = 'block';
 
         document.getElementById('deltaETValues').textContent = result.deltaETValues;
-        document.getElementById('frequencyStuckValue').textContent = result.frequencyStuck;
     } else {
         // Sembunyikan elemen jika bukan hasil Simulated Annealing
         document.getElementById('deltaET').style.display = 'none';
-        document.getElementById('frequencyStuck').style.display = 'none';
         
     }
 

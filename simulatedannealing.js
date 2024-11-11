@@ -1,7 +1,6 @@
 document.getElementById('startSimulatedAnnealing').addEventListener('click', () => { 
     //buat nampilin deltaet dan freq stuckiter
     document.getElementById('deltaET').style.display = 'block';
-    document.getElementById('frequencyStuck').style.display = 'block';
 
     const result = simulatedAnnealing(cubeNumbers);
     displayResults(result, cubeNumbers, 'objectiveChart');
@@ -12,8 +11,8 @@ function simulatedAnnealing(initialCubeArray) {
     let currentState = [...initialCubeArray];
     let currentScore = evaluate(currentState); 
     let temperature = 1000; 
-    const coolingRate = 0.99; 
-    const maxIterations = 10000; 
+    const coolingRate = 0.999; 
+    const maxIterations = 50000; 
     const scores = [currentScore];
     const deltaETValues = [];
     const stuckThreshold = 50;
@@ -49,9 +48,11 @@ function simulatedAnnealing(initialCubeArray) {
         if (deltaE > 0 || deltaET > Math.random()) {
             currentState = randomNeighbor;
             currentScore = neighborScore;
-            stuckCounter = 0; 
-        } else {
+           
+        }
+        else {
             stuckCounter++; 
+            
         }
 
         cubeNumbers = [...currentState];
@@ -68,10 +69,10 @@ function simulatedAnnealing(initialCubeArray) {
             stuckIterations.push(iteration);
             stuckCounter = 0; 
         }
-
         temperature *= coolingRate;
+        
 
-        if (temperature < 1e-3 || deltaET < 1e-10) {
+        if (temperature < 1e-10) {
             break;
         }
     }
