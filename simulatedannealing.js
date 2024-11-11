@@ -1,6 +1,6 @@
 document.getElementById('startSimulatedAnnealing').addEventListener('click', () => { 
     //buat nampilin deltaet dan freq stuckiter
-    document.getElementById('deltaET').style.display = 'block';
+    document.getElementById('deltaETValues').style.display = 'block';
     document.getElementById('populValue').style.display = 'none';
 
     const result = simulatedAnnealing(cubeNumbers);
