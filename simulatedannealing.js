@@ -1,6 +1,9 @@
 document.getElementById('startSimulatedAnnealing').addEventListener('click', () => { 
-    const result = simulatedAnnealing(cubeNumbers);
+    //buat nampilin deltaet dan freq stuckiter
+    document.getElementById('deltaET').style.display = 'block';
+    document.getElementById('frequencyStuck').style.display = 'block';
 
+    const result = simulatedAnnealing(cubeNumbers);
     displayResults(result, cubeNumbers, 'objectiveChart');
 });
 
@@ -39,10 +42,10 @@ function simulatedAnnealing(initialCubeArray) {
 
         const randomNeighbor = generateRandomNeighbor(currentState);
         const neighborScore = evaluate(randomNeighbor);
-
         const deltaE = neighborScore - currentScore;
+        const deltaET = Math.exp(deltaE / temperature);
 
-        if (deltaE > 0 || Math.exp(deltaE / temperature) > Math.random()) {
+        if (deltaE > 0 || deltaET > Math.random()) {
             currentState = randomNeighbor;
             currentScore = neighborScore;
             stuckCounter = 0; 
@@ -54,7 +57,11 @@ function simulatedAnnealing(initialCubeArray) {
         renderNumbers(); 
 
         scores.push(currentScore);
-        deltaETValues.push(Math.exp(deltaE / temperature));
+
+         // Simpan hanya deltaET yang signifikan
+        if (deltaET !== 1 && deltaET > 1e-10) {
+            deltaETValues.push(deltaET);
+        }
 
         if (stuckCounter >= stuckThreshold) {
             stuckIterations.push(iteration);
@@ -63,8 +70,7 @@ function simulatedAnnealing(initialCubeArray) {
 
         temperature *= coolingRate;
 
-        if (temperature < 1e-3) {
-            console.log("Temperature threshold reached or optimal solution maintained. Ending process.");
+        if (temperature < 1e-3 || deltaET < 1e-10) {
             break;
         }
     }
