@@ -1,12 +1,18 @@
 const mutationProbability = 0.1; 
 document.getElementById('gene').addEventListener('click', () => {
     // Jalankan algoritma stochasticHillClimbing
-    const result = geneticAlgorithm(100,100);
+    var maxiter = prompt("Masukkan angka untuk maks iterasi");
+    var maxpop = prompt("masukkan angka untuk maks populasi :")
+
+    const result = geneticAlgorithm(maxpop,maxiter);
     cubeNumbers = result.finalState;
     renderNumbers();
 
     // Tampilkan hasil menggunakan fungsi displayResults dari objectiveFunc.js
     displayResults(result, cubeNumbers, 'objectiveChart');
+    document.getElementById('populValue').textContent = result.lengthpop;
+    console.log("Jumlah Individu Populasi yang terbentuk : ", result.lengthpop);
+    
 });
 
 
@@ -121,8 +127,8 @@ function geneticAlgorithm(maxPopulationSize, maxIterations) {
         population.push(child);
 
         // Potong populasi agar tidak melebihi maxPopulationSize
-        if (population.length > maxPopulationSize) {
-            population = population.slice(0, maxPopulationSize);
+        if (population.length >= maxPopulationSize) {
+            break;
         }
 
         console.log(`Generation ${generationCount}: Best Fitness = ${bestFitness}`);
@@ -134,10 +140,11 @@ function geneticAlgorithm(maxPopulationSize, maxIterations) {
     return {
         initialState: awalan,
         finalState: bestIndividual, // Solusi akhir
-        finalScore: endscore, // Nilai objective function akhir
+        finalScore: bestFitness, // Nilai objective function akhir
         scores, // Semua skor untuk iterasi
         duration:berraa,
-        iteration:generationCount
+        iteration:generationCount,
+        lengthpop: population.length,
     };
 }
 

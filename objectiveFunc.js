@@ -128,6 +128,12 @@ function displayResults(result, cubeNumbers, chartId) {
         }
     });
 
+    document.getElementById('finalScoreValue').textContent = result.finalScore;
+    document.getElementById('iterationValue').textContent = result.iteration;
+    document.getElementById('durationValue').textContent = result.duration;
+    document.getElementById('valueAwal').textContent = result.initialState;
+    document.getElementById('valueAkhir').textContent = result.finalState;
+
     // Menampilkan hasil di konsol
     console.log("State Awal:", result.initialState);
     console.log("State Akhir:", result.finalState);
