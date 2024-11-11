@@ -1,6 +1,10 @@
 const mutateProb = 0.1; 
 
 document.getElementById('gene').addEventListener('click', () => {
+    //block biar ga muncul yg annealling
+    document.getElementById('deltaET').style.display = 'none';
+    document.getElementById('frequencyStuck').style.display = 'none';
+    
     var maxIter = prompt("Masukkan angka untuk maks iterasi");
     var maxPop = prompt("masukkan angka untuk maks populasi :")
     const result = geneticAlgorithm(maxPop,maxIter);

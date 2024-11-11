@@ -159,6 +159,21 @@ function displayResults(result, cubeNumbers, chartId) {
         }
     }
     
+    
+    if (result.deltaETValues && result.stuckIterations) {
+        document.getElementById('deltaET').style.display = 'block';
+        document.getElementById('frequencyStuck').style.display = 'block';
+
+        document.getElementById('deltaETValues').textContent = result.deltaETValues.join(', ');
+        document.getElementById('frequencyStuckValue').textContent = result.frequencyStuck.join(', ');
+    } else {
+        // Sembunyikan elemen jika bukan hasil Simulated Annealing
+        document.getElementById('deltaET').style.display = 'none';
+        document.getElementById('frequencyStuck').style.display = 'none';
+        
+    }
+
+
     document.getElementById('finalScoreValue').textContent = result.finalScore;
     document.getElementById('iterationValue').textContent = result.iteration;
     document.getElementById('durationValue').textContent = result.duration;
@@ -174,5 +189,7 @@ function displayResults(result, cubeNumbers, chartId) {
 
     displayState(result.initialState, 'valueAwal');
     displayState(result.finalState, 'valueAkhir');
+
+    
 }
 
