@@ -15,7 +15,7 @@ function stochasticHillClimbing(initialCubeArray) {
     let current_state = [...initialCubeArray];
     let current_obj = evaluate(current_state); // Hitung nilai awal objective function
     let iteration = 0;
-    const max_iteration = 1000; // Maksimum iterasi
+    const max_iteration = 50000; // Maksimum iterasi
     const scores = [current_obj];
 
     const start_time = Date.now(); 
