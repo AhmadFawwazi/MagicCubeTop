@@ -1,14 +1,13 @@
-const mutationProbability = 0.1; 
-document.getElementById('gene').addEventListener('click', () => {
-    // Jalankan algoritma stochasticHillClimbing
-    var maxiter = prompt("Masukkan angka untuk maks iterasi");
-    var maxpop = prompt("masukkan angka untuk maks populasi :")
+const mutateProb = 0.1; 
 
-    const result = geneticAlgorithm(maxpop,maxiter);
+document.getElementById('gene').addEventListener('click', () => {
+    var maxIter = prompt("Masukkan angka untuk maks iterasi");
+    var maxPop = prompt("masukkan angka untuk maks populasi :")
+    const result = geneticAlgorithm(maxPop,maxIter);
     cubeNumbers = result.finalState;
     renderNumbers();
 
-    // Tampilkan hasil menggunakan fungsi displayResults dari objectiveFunc.js
+    // buat visualisasi
     displayResults(result, cubeNumbers, 'objectiveChart');
     document.getElementById('populValue').textContent = result.lengthpop;
     console.log("Jumlah Individu Populasi yang terbentuk : ", result.lengthpop);
@@ -17,142 +16,139 @@ document.getElementById('gene').addEventListener('click', () => {
 
 
 
-function fillMissingNumbers(child) {
-    const numbers = Array.from({ length: 125 }, (_, i) => i + 1);
-    const usedNumbers = [];
+function MissingNum(child) {
+    const numbers = [];
+        for (let j = 1; j <= 125; j++) {
+            numbers.push(j);
+        }
 
+    const numberUse = [];
     child.forEach(num => {
         if (num !== null) {
-            usedNumbers.push(num);
+            numberUse.push(num);
         }
     });
 
-    const filteredNumbers = [];
+    const filterNum = [];
     for (let i = 0; i < numbers.length; i++) {
-        let isUsed = false;
-
-        for (let j = 0; j < usedNumbers.length; j++) {
-            if (numbers[i] === usedNumbers[j]) {
-                isUsed = true;
+        let isUse = false;
+        for (let j = 0; j < numberUse.length; j++) {
+            if (numbers[i] === numberUse[j]){
+                isUse = true;
                 break;
             }
         }
-
-
-        if (!isUsed) {
-            filteredNumbers.push(numbers[i]);
+        if (!isUse) {
+            filterNum.push(numbers[i]);
         }
     }
-
     for (let i = 0; i < child.length; i++) {
         if (child[i] === null) {
-            child[i] = filteredNumbers.pop();
+            child[i] = filterNum.pop();
         }
     }
-
     return child;
 }
 
 function crossover(parent1, parent2) {
     const child = Array(125).fill(null);
-    const crossoverPoint = Math.floor(Math.random() * 125);
+    const crossPoint = Math.floor(Math.random() * 125);
+    const useNumber = [];
 
-    const usedNumbers = [];
-
-    for (let i = 0; i < crossoverPoint; i++) {
+    for (let i = 0; i < crossPoint; i++) {
         child[i] = parent1[i];
-        usedNumbers.push(parent1[i]); 
+        useNumber.push(parent1[i]); 
     }
-
-    for (let i = crossoverPoint; i < 125; i++) {
-        let isUsed = false;
+    for (let i = crossPoint; i < 125; i++) {
+        let isUse = false;
         
-        for (let j = 0; j < usedNumbers.length; j++) {
-            if (usedNumbers[j] === parent2[i]) {
-                isUsed = true;
+        for (let j = 0; j < useNumber.length; j++) {
+            if (useNumber[j] === parent2[i]) {
+                isUse = true;
                 break;
             }
         }
-        if (!isUsed) {
+        if (!isUse) {
             child[i] = parent2[i];
-            usedNumbers.push(parent2[i]);
+            useNumber.push(parent2[i]);
         }
     }
-
-    return fillMissingNumbers(child);
+    return  MissingNum(child);
 }
 
 function mutate(individual) {
     const index1 = Math.floor(Math.random() * 125);
     const index2 = Math.floor(Math.random() * 125);
-    [individual[index1], individual[index2]] = [individual[index2], individual[index1]];
+    let i = individual[index1];
+    individual[index1] = individual[index2];
+    individual[index2] = i;
 }
 
-function geneticAlgorithm(maxPopulationSize, maxIterations) {
-    let population = initializePopulation(10); // Populasi awal dengan 10 individu
-    let awalan = population[0];
+function geneticAlgorithm(maxPop, maxIteration) {
+    let population = initPopulation(10); 
+    let startPop = population[0];
     let bestIndividual = population[0];
     let bestFitness = evaluate(bestIndividual);
     let generationCount = 0;
     let scores=[];
-    let endscore=0;
-    const mulai = Date.now();
+    const start = Date.now();
 
-    while (generationCount < maxIterations && population.length <= maxPopulationSize) {
+    while (generationCount < maxIteration && population.length <= maxPop) {
         generationCount++;
+        population.sort(function(a, b) {
+            return evaluate(b) - evaluate(a);
+        });
 
-        // Urutkan populasi berdasarkan fitness terbaik
-        population.sort((a, b) => evaluate(b) - evaluate(a));
-
-        // Update individu terbaik jika ada peningkatan
         if (evaluate(population[0]) > bestFitness) {
             bestIndividual = population[0];
             bestFitness = evaluate(bestIndividual);
         }
         scores.push(bestFitness);
 
-        // Pilih dua individu terbaik untuk dijadikan orang tua
+       
         const parent1 = population[0];
         const parent2 = population[1];
 
-        // Hasilkan anak melalui crossover
+        
         let child = crossover(parent1, parent2);
 
-        // Mutasi jika memenuhi probabilitas
-        if (Math.random() < mutationProbability) {
+        if (Math.random() < mutateProb) {
             mutate(child);
         }
 
-        // Masukkan anak ke dalam populasi
+        
         population.push(child);
 
-        // Potong populasi agar tidak melebihi maxPopulationSize
-        if (population.length >= maxPopulationSize) {
+    
+        if (population.length >= maxPop || bestFitness == 109) {
             break;
         }
 
         console.log(`Generation ${generationCount}: Best Fitness = ${bestFitness}`);
     }
-    const akhir = Date.now();
-    const berraa = (akhir - mulai) / 1000;
+    const end = Date.now();
+    const durations = (end - start) / 1000;
 
     console.log(`Algorithm stopped after ${generationCount} generations.`);
     return {
-        initialState: awalan,
-        finalState: bestIndividual, // Solusi akhir
+        initialState: startPop, // State solusi awal
+        finalState: bestIndividual, // State Solusi akhir
         finalScore: bestFitness, // Nilai objective function akhir
-        scores, // Semua skor untuk iterasi
-        duration:berraa,
+        scores, // Semua nilai obj per iterasi
+        duration:durations,
         iteration:generationCount,
         lengthpop: population.length,
     };
 }
 
-// Fungsi inisialisasi populasi awal acak
-function initializePopulation(size) {
+
+function initPopulation(size) {
     const population = [];
     for (let i = 0; i < size; i++) {
-        const individual = Array.from({ length: 125 }, (_, i) => i + 1);
+        const individual = [];
+        for (let j = 1; j <= 125; j++) {
+            individual.push(j);
+        }
         shuffleArray(individual);
         population.push(individual);
     }
