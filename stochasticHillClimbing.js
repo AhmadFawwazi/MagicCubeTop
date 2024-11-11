@@ -1,68 +1,67 @@
 document.getElementById('startStochasticHillClimb').addEventListener('click', () => {
-    // Jalankan algoritma stochasticHillClimbing
+    // Jalankan algoritma 
     const result = stochasticHillClimbing(cubeNumbers);
 
-    // Tampilkan hasil menggunakan fungsi displayResults 
+    // Tampilkan hasil  
     displayResults(result, cubeNumbers, 'objectiveChart');
 
 });
 
 function stochasticHillClimbing(initialCubeArray) {
-    let currentState = [...initialCubeArray];
-    let currentScore = evaluate(currentState); // Hitung nilai awal objective function
+    let current_state = [...initialCubeArray];
+    let current_obj = evaluate(current_state); // Hitung nilai awal objective function
     let iteration = 0;
-    const maxIterations = 1000; // Maksimum iterasi
-    const scores = [currentScore];
+    const max_iteration = 1000; // Maksimum iterasi
+    const scores = [current_obj];
 
-    const startTime = Date.now(); 
-    while (iteration < maxIterations) {
+    const start_time = Date.now(); 
+    while (iteration < max_iteration) {
         iteration++;
 
         // Hasilkan neighbor secara acak
-        const randomNeighbor = generateRandomNeighbor(currentState);
-        const neighborScore = evaluate(randomNeighbor);
+        const new_neighbor = Random_Neighbor(current_state);
+        const neighbor_obj = evaluate(new_neighbor);
 
         // Pindah ke neighbor ke lebih baik
-        if (neighborScore > currentScore) {
-            currentState = randomNeighbor;
-            currentScore = neighborScore;
+        if (neighbor_obj > current_obj) {
+            current_state = new_neighbor;
+            current_obj = neighbor_obj;
         }
 
-        cubeNumbers = [...currentState]; // Salin state baru ke cubeNumbers
+        cubeNumbers = [...current_state]; // Salin state baru ke cubeNumbers
         renderNumbers(); 
 
         // Simpan skor 
-        scores.push(currentScore);
+        scores.push(current_obj);
 
         // kondisi berhenti
-        if (iteration == maxIterations || currentScore == 109) {
+        if (iteration == max_iteration || current_obj == 109) {
             console.log("Max iterations reached.");
             break;
         }
     }
-    const endTime = Date.now();
+    const end_time = Date.now();
     
 
     return {
         initialState: initialCubeArray, // state awal
-        finalState: currentState, // state akhir
-        finalScore: currentScore, // Nilai objective function akhir
+        finalState: current_state, // state akhir
+        finalScore: current_obj, // Nilai objective function akhir
         scores, // Semua skor untuk iterasi
-        duration : (endTime - startTime) / 1000, // waktu
-        iteration: iteration // Total iterasi yang dijalankan
+        duration : (end_time - start_time) / 1000, // waktu
+        iteration: iteration // Total iterasi 
     };
 }
 
 
-function generateRandomNeighbor(cubeArray) {
+function Random_Neighbor(cubeArray) {
 
-    const newNeighbor = [...cubeArray];
+    const New_Neighbor = [...cubeArray];
     const i = Math.floor(Math.random() * cubeArray.length);
     const j = Math.floor(Math.random() * cubeArray.length);
 
-    // Tukar dua elemen secara acak
-    [newNeighbor[i], newNeighbor[j]] = [newNeighbor[j], newNeighbor[i]];
+    [New_Neighbor[i], New_Neighbor[j]] = [New_Neighbor[j], New_Neighbor[i]]; // menukar menggunakan index
 
-    return newNeighbor;
+    return New_Neighbor;
 }
 
