@@ -38,10 +38,12 @@ function MissingNum(child) {
                 break;
             }
         }
+
         if (!isUse) {
             filterNum.push(numbers[i]);
         }
     }
+    
     for (let i = 0; i < child.length; i++) {
         if (child[i] === null) {
             child[i] = filterNum.pop();
@@ -105,21 +107,15 @@ function geneticAlgorithm(maxPop, maxIteration) {
         }
         scores.push(bestFitness);
 
-       
         const parent1 = population[0];
         const parent2 = population[1];
-
-        
         let child = crossover(parent1, parent2);
 
         if (Math.random() < mutateProb) {
             mutate(child);
         }
-
-        
         population.push(child);
 
-    
         if (population.length >= maxPop || bestFitness == 109) {
             break;
         }
