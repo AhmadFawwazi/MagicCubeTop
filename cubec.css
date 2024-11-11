@@ -1,3 +1,23 @@
+:root {
+    --primary: #000000;
+    --background: #fafafa;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--background);
+    color: #fff;
+    height: 1800px;
+}
 
 .env {
     display: flex;
@@ -6,6 +26,8 @@
     height: 100vh;
     perspective: 800px;
     flex-direction: column;
+    background-color: var(--background);
+    padding-bottom: 50px;
 }
 
 .cubebeng {
@@ -66,3 +88,88 @@
 .right { transform: rotateY(90deg) translateZ(25px); }
 .top { transform: rotateX(90deg) translateZ(25px); }
 .bottom { transform: rotateX(-90deg) translateZ(25px); }
+
+
+/* section control, result, ama chart */
+section.controls{
+    text-align: center;
+    margin-top: 100px;
+}
+section.results {
+    text-align: center;
+    margin-top: 50px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: #000000;
+
+}
+
+section.chart {
+    margin-top: 50px;
+}
+
+/* Controls Section Styling */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; 
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+}
+
+/* Button Styling */
+.controls button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: var(--primary);
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Button Hover Effect */
+.controls button:hover {
+    background-color: #ff9090;
+    transform: translateY(-2px);
+}
+
+/* Button Active Effect */
+.controls button:active {
+    background-color: #ff9090;
+    transform: translateY(0px);
+}
+
+
+
+/* Chart Section Styling */
+.chart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Canvas Styling */
+.chart canvas {
+    width: 100%;
+    height: auto;
+    max-width: 550px;
+    max-height: 450px;
+}
+
+#deltaET, #stuckIterations {
+    display: none; 
+}
