@@ -16,7 +16,7 @@ function steepestAscentHillClimbing(initialCubeArray)
     let current_state = [...initialCubeArray];
     let current_obj = evaluate(current_state); // Menghitung nilai objective function pada current state
     let iterasi = 0;
-    const max_iterasi = 1000; 
+    const max_iterasi = 50000; 
     const scores = [current_obj];
 
     const steepeststartTime = Date.now();
