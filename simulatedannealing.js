@@ -5,6 +5,7 @@ document.getElementById('startSimulatedAnnealing').addEventListener('click', () 
 
     const result = simulatedAnnealing(cubeNumbers);
     displayResults(result, cubeNumbers, 'objectiveChart');
+    document.getElementById('stuckValue').textContent = result.stuckIterations;
 });
 
 function simulatedAnnealing(initialCubeArray) {
@@ -84,7 +85,7 @@ function simulatedAnnealing(initialCubeArray) {
         scores, 
         duration: (simulatedannealingEndTime - simulatedannealingStartTime) / 1000,
         deltaETValues, 
-        stuckIterations, 
+        stuckIterations : stuckCounter, 
         iteration: iteration 
     };
 }

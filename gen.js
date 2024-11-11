@@ -42,12 +42,11 @@ function MissingNum(child) {
                 break;
             }
         }
-
         if (!isUse) {
             filterNum.push(numbers[i]);
         }
     }
-    
+
     for (let i = 0; i < child.length; i++) {
         if (child[i] === null) {
             child[i] = filterNum.pop();
@@ -128,7 +127,6 @@ function geneticAlgorithm(maxPop, maxIteration) {
     }
     const end = Date.now();
     const durations = (end - start) / 1000;
-
     console.log(`Algorithm stopped after ${generationCount} generations.`);
     return {
         initialState: startPop, // State solusi awal
